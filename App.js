@@ -34,7 +34,7 @@ function App() {
   }
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Text> Loading... </Text>
   }
 
   console.log("Respondió redux ->", weatherState);
@@ -43,8 +43,8 @@ function App() {
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
-      <Text> {JSON.stringify(weatherState)} </Text>
 
+      <Text> {JSON.stringify(weatherState?.main)} </Text>
       <Button
         onPress={onPress}
         title="Learn More"

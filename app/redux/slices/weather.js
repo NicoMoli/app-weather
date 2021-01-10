@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios';
 
 export const initialState = {
     currentCity: null,
@@ -54,27 +55,22 @@ export default weatherSlice.reducer
 
 
 //APIs calls
-export const fetchWeatherState = createAsyncThunk(
-    "weather/fetchWeatherState",
-    async (thunkAPI) => {
-      // Set the loading state to true
-      thunkAPI.dispatch(getWeatherState());
-  
-      try {
-        console.log("Llamando a API!")
-        const response = await fetch(
-          "http://localhost:3000/v1/location",
-          {
-            method: "GET"
-          }
-        );
+export const fetchWeatherState = () => async dispatch => {
+  try {
+    dispatch(getWeatherState());
 
-        const data = response.DataObject;
-        // Set the data 
-        thunkAPI.dispatch(getWeatherStateSucess(data));
-      } catch (error) {
-        // Set any erros while trying to fetch
-        thunkAPI.dispatch(getWeatherStateFailure());
-      }
-    }
-  );
+    console.log("Llamando a API fetchWeatherState!");
+
+    const response = await axios.get(`http://192.168.1.17:3000/v1/location`);
+    
+    const data = response.data.DataObject;
+
+    // Set the data 
+    dispatch(getWeatherStateSucess(data));
+
+  } 
+  catch (e) {
+    dispatch(getWeatherStateFailure());
+    console.log(e);
+  }
+}
