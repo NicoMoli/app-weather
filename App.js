@@ -1,11 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, FlatList, SafeAreaView, Platform, StatusBar, View } from 'react-native';
 
 import store from './app/redux/store/index';
 import { Provider } from 'react-redux';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWeatherState } from "./app/redux/slices/weather";
+
+import { ForecastCard } from './app/components/forecastCard';
 
 export default function AppWrapper() {
 
@@ -34,24 +35,27 @@ function App() {
   }
 
   if (loading) {
-    return <Text> Loading... </Text>
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text> Cargando datos del clima... </Text>
+      </SafeAreaView>
+    )
   }
 
-  console.log("Respondió redux ->", weatherState);
-
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-
-      <Text> {JSON.stringify(weatherState?.main)} </Text>
-      <Button
-        onPress={onPress}
-        title="Learn More"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <FlatList 
+          data={weatherState} 
+          style={{marginTop:20}} 
+          keyExtractor={item => item.id} 
+          renderItem={ ({item}) => 
+            <ForecastCard detail={item} location={item.city} />
+          } 
+        />
+      </View>
+      
+    </SafeAreaView>
   );
 }
 
@@ -61,5 +65,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
 });

@@ -65,6 +65,7 @@ export const fetchWeatherState = () => async dispatch => {
     
     const data = response.data.DataObject;
 
+    console.log("Llamando a API fetchWeatherState OK!");
     // Set the data 
     dispatch(getWeatherStateSucess(data));
 
