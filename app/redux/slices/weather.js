@@ -61,17 +61,35 @@ export const fetchWeatherState = () => async dispatch => {
 
     console.log("Llamando a API fetchWeatherState!");
 
-    const response = await axios.get(`http://192.168.1.17:3000/v1/location`);
-    
+    const response = await axios.get(`http://192.168.0.87:3000/v1/forecast/rosario`);
+
     const data = response.data.DataObject;
 
     console.log("Llamando a API fetchWeatherState OK!");
-    // Set the data 
-    dispatch(getWeatherStateSucess(data));
+
+    // Set the data
+    const dataFiltered = filterData(data);
+    dispatch(getWeatherStateSucess(dataFiltered));
 
   } 
   catch (e) {
     dispatch(getWeatherStateFailure());
-    console.log(e);
+    console.log("ERROR API Response -> ", e);
   }
 }
+
+const filterData = (rawData) => {
+
+    return {
+      id: rawData.city.id,
+      name: rawData.city.name,
+      country: rawData.city.country,
+      timezone: rawData.city.timezone,
+      coord: {
+        lat: rawData.city.coord.lat,
+        lon: rawData.city.coord.lon,
+      },
+      list: rawData.list,
+    };
+    
+  };
