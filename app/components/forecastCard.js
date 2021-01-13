@@ -39,7 +39,6 @@ const ForecastCard = ({props}) => {
             <Container>
                 <CurrentDay>
                     <City>{props?.name}</City>
-                    <BigText>Today</BigText>
                     <BigIcon
                         source={
                             imageDictionary[
