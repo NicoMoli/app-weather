@@ -6,8 +6,8 @@ export const Container = styled.SafeAreaView`
   background-color: #272343;
   justify-content: center;
   width: 100%;
-  align-items: center;
-  padding-top: ${Platform.OS === 'android' ? StatusBar.currentHeight : 0};
+  
+  padding-top: ${Platform.OS === 'android' ? StatusBar.currentHeight + "px" : 0};
 `;
 export const CurrentDay = styled.View`
   position: relative;
@@ -46,26 +46,31 @@ export const Description = styled.Text`
   padding-top: 20px;
 `;
 
-export const Week = styled.ScrollView`
-  bottom: 0;
+export const Week = styled.View`
+  flex: 1;
+  top: 340px;
   left: 0;
   width: 100%;
   height: 150px;
   position: absolute;
-  background: black;
+  justify-content: center;
+ 
 `;
 
 export const Day = styled.View`
-  height: 150px;
-  width: 75px;
-  justify-content: center;
-  align-items: center;
+  flexDirection: row;
+  position: relative;
+  justify-content: space-around;
+  height: auto;
+  margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 export const SmallIcon = styled.Image`
-  width: 50px;
-  height: 50px;
+  width: 20px;
+  height: 20px;
 `;
+
 export const SmallText = styled.Text`
   font-size: 20px;
   font-weight: 300;

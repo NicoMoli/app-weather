@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
+import { View } from 'react-native';
+
 import { isSameDay, format } from "date-fns";
 import imageDictionary from "../shared/images.js";
+
 import Card from '../components/card';
+
 import {
     Container,
     CurrentDay,
@@ -12,6 +16,8 @@ import {
     Description,
     Week,
 } from '../styles/styles';
+
+import { Divider } from "react-native-elements";
 
 
 const ForecastCard = ({props}) => {
@@ -51,15 +57,17 @@ const ForecastCard = ({props}) => {
                         {currentWeather[0]?.weather[0].description}
                     </Description>
                 </CurrentDay>
-                <Week horizontal={true} showsHorizontalScrollIndicator={false}>
+                <Week horizontal={false} showsHorizontalScrollIndicator={false}>
                     {daysByHour?.map((day, index) => (
                         <Card
                             key={index}
+                            index={index}
                             icon={day.icon}
                             name={day.name.substring(0, 3)}
                             temp={day.temp}
                             hour={day.hour}
                         />
+                        
                     ))}
                 </Week>
             </Container>
