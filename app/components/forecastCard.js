@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { View } from 'react-native';
+import React from "react";
+import { FlatList } from 'react-native';
 
 import { isSameDay, format } from "date-fns";
 import imageDictionary from "../shared/images.js";
@@ -15,9 +15,8 @@ import {
     Temp,
     Description,
     Week,
+    TempMinMax
 } from '../styles/styles';
-
-import { Divider } from "react-native-elements";
 
 
 const ForecastCard = ({props}) => {
@@ -30,13 +29,13 @@ const ForecastCard = ({props}) => {
 
     const daysByHour = props?.list.map((day) => {
         const dt = new Date(day.dt * 1000);
+        console.log("DaysByHour -> ", dt)
         return {
             date: dt,
             hour: dt.getHours(),
             name: format(dt, "EEEE"),
             temp: Math.round(day.main.temp),
-            icon:
-                imageDictionary[day.weather[0].icon] || imageDictionary["02d"],
+            icon: imageDictionary[day.weather[0].icon] || imageDictionary["02d"],
         };
     });
 
@@ -53,11 +52,16 @@ const ForecastCard = ({props}) => {
                         }
                     />
                     <Temp>{Math.round(currentWeather[0].main.temp)}°C</Temp>
+                    <TempMinMax>
+                        {Math.round(currentWeather[0].main.temp_min)}°C -
+                        {Math.round(currentWeather[0].main.temp_max)}°C
+                    </TempMinMax>
+                    {/* <TempMinMax>{Math.round(currentWeather[0].main.temp_max)}°C</TempMinMax> */}
                     <Description>
                         {currentWeather[0]?.weather[0].description}
                     </Description>
                 </CurrentDay>
-                <Week horizontal={false} showsHorizontalScrollIndicator={false}>
+                <Week horizontal={false} showsVerticalScrollIndicator={false}>
                     {daysByHour?.map((day, index) => (
                         <Card
                             key={index}
@@ -74,4 +78,5 @@ const ForecastCard = ({props}) => {
         )
     );
 };
+
 export default ForecastCard;

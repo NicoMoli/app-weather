@@ -7,16 +7,15 @@ export default function Card({ name, icon, temp, hour, index }) {
   return (
     <View>
       {
-        index === 0 ? 
+        index === 0 
+          ? 
           <Day>
             <SmallIcon source={icon} />
             <SmallText>{name}</SmallText>
             <SmallText>{temp}°C</SmallText>
             <SmallText>{hour}h</SmallText>
           </Day> 
-
-            :
-
+          :
           <View>
             <Divider style={{
                 borderBottomColor: 'white',
@@ -30,8 +29,7 @@ export default function Card({ name, icon, temp, hour, index }) {
               <SmallText>{hour}h</SmallText>
             </Day>
           </View>
-      }
-      
+      }      
     </View>
     
   );
