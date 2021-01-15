@@ -7,21 +7,18 @@ import {
 import store from './app/redux/store/index';
 import { Provider } from 'react-redux';
 import WeatherScreen from './app/screens/weather-screen';
+      
+import { NavigationContainer } from '@react-navigation/native';
+import AppRoutes from './app/routes/app-routes';
 
-export default function AppWrapper() {
+export default function App() {
 
   return (
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <NavigationContainer>
+      <Provider store={store}>
+        <AppRoutes />
+      </Provider>
+    </NavigationContainer>
+    
   )
-}
-
-function App() {
-
-  return (
-    <Container>
-        <WeatherScreen />
-    </Container>
-  );
 }

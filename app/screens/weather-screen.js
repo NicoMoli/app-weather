@@ -1,27 +1,37 @@
-import React from 'react';
-import { StyleSheet, View, Image, Text, Card } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 
 import ForecastCard from './../components/forecastCard';
-import useForecastWeather from '../customsHooks/useCurrentAndForecastWeather';
 import SearchCity from '../components/search-city';
-import { Container } from './../styles/styles';
+import { Container, ContainerSearch } from './../styles/styles';
 import useCurrentAndForecastWeather from './../customsHooks/useCurrentAndForecastWeather';
 
-function WeatherScreen({props}) {
+function WeatherScreen({route, navigation}) {
 
-	const { loading, weatherForecast, weatherCurrentState } = useCurrentAndForecastWeather();
+	const city = route.params?.city;
+	const lat = route.params?.lat;
+	const lon = route.params?.lon;
 
+	let data = {}
+
+	if(lat && lon)
+		data = useCurrentAndForecastWeather(lat, lon);
+	else 
+		data = useCurrentAndForecastWeather();
+	
     return (
 		<View style={styles.container}>
 			{ 
-				loading ?
+				data?.loading ?
 					<Text> Cargando datos del clima... </Text> 
 				: 
 					<Container>
-						<SearchCity />
-						<ForecastCard currentWeather={weatherCurrentState} forecastWeather={weatherForecast} />
-					</Container>
-					
+						<ContainerSearch>
+							<SearchCity navigation={navigation} />
+						</ContainerSearch>
+						
+						<ForecastCard currentWeather={data?.weatherCurrentState} forecastWeather={data?.weatherForecast} />
+					</Container>					
 		  	}
 		</View>	
 	);

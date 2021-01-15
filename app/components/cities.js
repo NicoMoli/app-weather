@@ -1,15 +1,30 @@
 import React from "react";
+import { ListItem } from 'react-native-elements'
+import { Container} from "../styles/styles";
 
-const Cities = ({props}) => {
+import { cities } from './../shared/cities-list';
+
+
+const Cities = ({navigation}) => {
 
     return (
-        <Icon
-            raised
-            name='search'
-            type='font-awesome'
-            color='#f50'
-            onPress={() => console.log('hello')} 
-        />
+        <Container>
+            {
+                cities.list.map((l, i) => (
+                <ListItem key={i} bottomDivider 
+                    onPress={() => navigation.navigate('Weather', {
+                        city: l.name,
+                        lat: l.coordinates.lat,
+                        lon: l.coordinates.lon
+                      })
+                    }>
+                    <ListItem.Content>
+                        <ListItem.Title>{l.name}</ListItem.Title>
+                    </ListItem.Content>
+                </ListItem>
+                ))
+            }
+        </Container>
     )
 
 }

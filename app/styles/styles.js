@@ -4,10 +4,15 @@ import { Platform, StatusBar } from 'react-native';
 export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: #272343;
-  justify-content: center;
   width: 100%;
   padding-top: ${Platform.OS === 'android' ? StatusBar.currentHeight + "px" : 0};
 `;
+
+export const ContainerSearch = styled.View`
+  alignItems: flex-end;
+  margin-right: 25px;
+`;
+
 export const CurrentDay = styled.View`
   position: relative;
   flex: 1;

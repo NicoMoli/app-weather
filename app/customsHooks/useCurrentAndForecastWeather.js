@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCurrentWeatherState, fetchWeatherForecastState } from '../redux/slices/weather';
 
 
-export default function useCurrentAndForecastWeather() {
+export default function useCurrentAndForecastWeather(lat = null, lon = null) {
 
   const dispatch = useDispatch();
 
@@ -13,18 +13,16 @@ export default function useCurrentAndForecastWeather() {
   ).weatherSlice;
 
   useEffect(() => {
-    dispatch(fetchWeatherForecastState(-32.94682, -60.63932));
+    
+    if(!lat && !lon)  
+      dispatch(fetchWeatherForecastState(-32.94682, -60.63932));
+    else
+      dispatch(fetchWeatherForecastState(lat, lon));
+
     dispatch(fetchCurrentWeatherState());
-  }, [dispatch]);
 
-  function onPress() {
-    console.log("Presionando boton")
-    //dispatch(fetchWeatherForecastState());
-  }
+  }, [dispatch, lat, lon]);
 
-  //weatherState.daily = weatherState?.daily.splice(5, 4);
-  // const data =weatherState;
-  // data.daily = data.daily.splice(5, 4);
 
   return {loading, weatherForecast, weatherCurrentState};
 }

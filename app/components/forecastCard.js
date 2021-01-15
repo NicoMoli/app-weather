@@ -21,12 +21,6 @@ import {
 
 const ForecastCard = ({currentWeather, forecastWeather}) => {
 
-    // const currentWeather = props?.list.filter((day) => {
-    //     const now = new Date().getTime() + Math.abs(props?.timezone * 1000);
-    //     const currentDate = new Date(day.dt * 1000);
-    //     return isSameDay(now, currentDate);
-    // });
-
     const lastUpdateHour = new Date(currentWeather?.dt * 1000).getHours();
     const lastUpdateMin = new Date(currentWeather?.dt * 1000).getMinutes();
 
@@ -74,8 +68,7 @@ const ForecastCard = ({currentWeather, forecastWeather}) => {
                             name={day.name.substring(0, 3)}
                             tempMax={day.temp_max}
                             tempMin={day.temp_min}
-                        />
-                        
+                        />                        
                     ))}
                 </Week>
             </Container>

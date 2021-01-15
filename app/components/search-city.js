@@ -1,15 +1,15 @@
 import React from "react";
 import { Icon } from 'react-native-elements'
 
-const SearchCity = ({props}) => {
+const SearchCity = ({navigation}) => {
 
     return (
         <Icon
-            raised
+            size={20}
+            color="white"
             name='search'
-            type='font-awesome'
-            color='#f50'
-            onPress={() => console.log('hello')} 
+            type='font-awesome'         
+            onPress={() => navigation.navigate('Cities')} 
         />
     )
 
