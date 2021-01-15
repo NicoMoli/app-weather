@@ -15,7 +15,7 @@ function WeatherScreen({route, navigation}) {
 	let data = {}
 
 	if(lat && lon)
-		data = useCurrentAndForecastWeather(lat, lon);
+		data = useCurrentAndForecastWeather(lat, lon, city);
 	else 
 		data = useCurrentAndForecastWeather();
 	

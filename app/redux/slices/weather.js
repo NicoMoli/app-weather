@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 
 export const initialState = {
-    currentCity: null,
+    currentLocation: null,
     weatherCurrentState: null,
     weatherForecast: null,
     loading: false
@@ -37,8 +37,14 @@ const weatherSlice = createSlice({
             state.loading = false;
         },
 
-        setCurrentCity: (state, { payload }) => {
-            state.currentCity = payload;
+        getCurrentLocation: (state, { payload }) => {
+          state.loading = true;
+        },
+        getCurrentLocationSuccess: (state) => {
+          state.currentLocation = payload;
+        },
+        getCurrentLocationFailure: (state) => {
+          state.loading = false;
         },
 
     }
@@ -50,7 +56,9 @@ export const {  getWeatherState,
                 getWeatherForecast,
                 getWeatherForecastSucess,
                 getWeatherForecastFailure,
-                setCurrentCity
+                getCurrentLocation,
+                getCurrentLocationSuccess,
+                getCurrentLocationFailure
             } = weatherSlice.actions;
 
 export default weatherSlice.reducer
@@ -61,40 +69,52 @@ export const fetchWeatherForecastState = (lat, lon) => async dispatch => {
   try {
     dispatch(getWeatherForecast());
 
-    console.log("Llamando a API fetchWeatherState!");
-
     const response = await axios.get(`http://192.168.0.87:3000/v1/forecast/` + lat + '/' + lon);
 
     const data = response.data.DataObject;
-
-    console.log("Llamando a API fetchWeatherState OK!");
 
     dispatch(getWeatherForecastSucess(data));
 
   } 
   catch (e) {
     dispatch(getWeatherForecastFailure());
-    console.log("ERROR API Response -> ", e);
   }
 }
 
-export const fetchCurrentWeatherState = () => async dispatch => {
+export const fetchCurrentWeatherState = (cityName) => async dispatch => {
   try {
     dispatch(getWeatherState());
 
-    console.log("Llamando a API fetchCurrentWeatherState!");
-
-    const response = await axios.get(`http://192.168.0.87:3000/v1/current/`);
+    const response = await axios.get(`http://192.168.0.87:3000/v1/current/` + cityName);
 
     const data = response.data.DataObject;
-
-    console.log("Llamando a API fetchCurrentWeatherState OK!");
 
     dispatch(getWeatherStateSucess(data));
 
   } 
   catch (e) {
     dispatch(getWeatherStateFailure());
-    console.log("ERROR API Response -> ", e);
+  }
+}
+
+export const fetchCurrentLocationWeather = () => async dispatch => {
+  try {
+    dispatch(getCurrentLocation());
+
+    const response = await axios.get(`http://192.168.0.87:3000/v1/location`);
+
+    const data = response.data.DataObject;
+
+    console.log("Location -> ", data)
+
+    dispatch(fetchCurrentWeatherState(data.city));
+
+    dispatch(fetchWeatherForecastState(data.lat, data.lon));
+
+    dispatch(getCurrentLocationSuccess(data));
+
+  } 
+  catch (e) {
+    dispatch(getCurrentLocationFailure());
   }
 }

@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentWeatherState, fetchWeatherForecastState } from '../redux/slices/weather';
+import { fetchCurrentLocationWeather, fetchCurrentWeatherState, fetchWeatherForecastState } from '../redux/slices/weather';
 
-
-export default function useCurrentAndForecastWeather(lat = null, lon = null) {
+export default function useCurrentAndForecastWeather(lat = null, lon = null, city = null) {
 
   const dispatch = useDispatch();
+
+  //Obtenemos la ubicacion actual a través del server
 
   const { loading, weatherForecast, weatherCurrentState } = useSelector(
     (state) => state
@@ -14,13 +14,14 @@ export default function useCurrentAndForecastWeather(lat = null, lon = null) {
 
   useEffect(() => {
     
-    if(!lat && !lon)  
-      dispatch(fetchWeatherForecastState(-32.94682, -60.63932));
-    else
+    if(!lat && !lon && !city) {
+      dispatch(fetchCurrentLocationWeather());
+    }  
+    else {
+      dispatch(fetchCurrentWeatherState(city));
       dispatch(fetchWeatherForecastState(lat, lon));
-
-    dispatch(fetchCurrentWeatherState());
-
+    }
+      
   }, [dispatch, lat, lon]);
 
 

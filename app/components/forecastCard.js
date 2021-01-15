@@ -39,7 +39,7 @@ const ForecastCard = ({currentWeather, forecastWeather}) => {
         (
             <Container>
                 <CurrentDay>
-                    <City>{'NOMBRE CIUDAD'}</City>
+                    <City>{currentWeather?.name}</City>
                     <BigIcon
                         source={
                             imageDictionary[
