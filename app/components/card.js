@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Divider } from "react-native-elements";
 import { Day, SmallIcon, SmallText } from '../styles/styles';
 
-export default function Card({ name, icon, temp, hour, index }) {
+export default function Card({ name, icon, tempMin, tempMax, index }) {
   return (
     <View>
       {
@@ -12,8 +12,7 @@ export default function Card({ name, icon, temp, hour, index }) {
           <Day>
             <SmallIcon source={icon} />
             <SmallText>{name}</SmallText>
-            <SmallText>{temp}°C</SmallText>
-            <SmallText>{hour}h</SmallText>
+            <SmallText>{tempMin} - {tempMax}°C</SmallText>
           </Day> 
           :
           <View>
@@ -25,8 +24,7 @@ export default function Card({ name, icon, temp, hour, index }) {
             <Day>
               <SmallIcon source={icon} />
               <SmallText>{name}</SmallText>
-              <SmallText>{temp}°C</SmallText>
-              <SmallText>{hour}h</SmallText>
+              <SmallText>{tempMin} - {tempMax}°C</SmallText>
             </Day>
           </View>
       }      

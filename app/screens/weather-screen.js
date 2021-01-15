@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, Card } from 'react-native';
 
 import ForecastCard from './../components/forecastCard';
-import useForecastWeather from './../customsHooks/useForecastWeather';
+import useForecastWeather from '../customsHooks/useCurrentAndForecastWeather';
 import SearchCity from '../components/search-city';
 import { Container } from './../styles/styles';
+import useCurrentAndForecastWeather from './../customsHooks/useCurrentAndForecastWeather';
 
 function WeatherScreen({props}) {
 
-	const {loading, weatherState} = useForecastWeather();
+	const { loading, weatherForecast, weatherCurrentState } = useCurrentAndForecastWeather();
 
     return (
 		<View style={styles.container}>
@@ -18,7 +19,7 @@ function WeatherScreen({props}) {
 				: 
 					<Container>
 						<SearchCity />
-						<ForecastCard props={weatherState} />
+						<ForecastCard currentWeather={weatherCurrentState} forecastWeather={weatherForecast} />
 					</Container>
 					
 		  	}

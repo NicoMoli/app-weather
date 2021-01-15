@@ -1,7 +1,7 @@
 import React from "react";
-import { FlatList } from 'react-native';
 
 import { isSameDay, format } from "date-fns";
+import { es } from 'date-fns/esm/locale'
 import imageDictionary from "../shared/images.js";
 
 import Card from '../components/card';
@@ -19,57 +19,61 @@ import {
 } from '../styles/styles';
 
 
-const ForecastCard = ({props}) => {
+const ForecastCard = ({currentWeather, forecastWeather}) => {
 
-    const currentWeather = props?.list.filter((day) => {
-        const now = new Date().getTime() + Math.abs(props?.timezone * 1000);
-        const currentDate = new Date(day.dt * 1000);
-        return isSameDay(now, currentDate);
-    });
+    // const currentWeather = props?.list.filter((day) => {
+    //     const now = new Date().getTime() + Math.abs(props?.timezone * 1000);
+    //     const currentDate = new Date(day.dt * 1000);
+    //     return isSameDay(now, currentDate);
+    // });
 
-    const daysByHour = props?.list.map((day) => {
+    const lastUpdateHour = new Date(currentWeather?.dt * 1000).getHours();
+    const lastUpdateMin = new Date(currentWeather?.dt * 1000).getMinutes();
+
+    const daysForecast = forecastWeather?.daily.map((day) => {
         const dt = new Date(day.dt * 1000);
-        console.log("DaysByHour -> ", dt)
         return {
             date: dt,
-            hour: dt.getHours(),
-            name: format(dt, "EEEE"),
-            temp: Math.round(day.main.temp),
+            name: format(dt, "EEEE", {locale: es}),
+            temp_min: Math.round(day.temp.min),
+            temp_max: Math.round(day.temp.max),
             icon: imageDictionary[day.weather[0].icon] || imageDictionary["02d"],
         };
     });
 
     return (
-        currentWeather?.length > 0 && (
+        (
             <Container>
                 <CurrentDay>
-                    <City>{props?.name}</City>
+                    <City>{'NOMBRE CIUDAD'}</City>
                     <BigIcon
                         source={
                             imageDictionary[
-                                currentWeather[0].weather[0].icon
+                                currentWeather?.weather[0].icon
                             ] || imageDictionary["02d"]
                         }
                     />
-                    <Temp>{Math.round(currentWeather[0].main.temp)}°C</Temp>
+                    <Temp>{Math.round(currentWeather?.main.temp)}°C</Temp>
                     <TempMinMax>
-                        {Math.round(currentWeather[0].main.temp_min)}°C -
-                        {Math.round(currentWeather[0].main.temp_max)}°C
+                        {Math.round(currentWeather?.main.temp_min)}°C -
+                        {Math.round(currentWeather?.main.temp_max)}°C
                     </TempMinMax>
-                    {/* <TempMinMax>{Math.round(currentWeather[0].main.temp_max)}°C</TempMinMax> */}
                     <Description>
-                        {currentWeather[0]?.weather[0].description}
+                        {currentWeather?.weather[0].description}
                     </Description>
+                    <Description>
+                        {'Última actualización: '}{ lastUpdateHour  + ':' + lastUpdateMin}
+                    </Description>  
                 </CurrentDay>
                 <Week horizontal={false} showsVerticalScrollIndicator={false}>
-                    {daysByHour?.map((day, index) => (
+                    {daysForecast?.map((day, index) => (
                         <Card
                             key={index}
                             index={index}
                             icon={day.icon}
                             name={day.name.substring(0, 3)}
-                            temp={day.temp}
-                            hour={day.hour}
+                            tempMax={day.temp_max}
+                            tempMin={day.temp_min}
                         />
                         
                     ))}

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const initialState = {
     currentCity: null,
-    weatherState: null,
+    weatherCurrentState: null,
     weatherForecast: null,
     loading: false
 }
@@ -17,8 +17,8 @@ const weatherSlice = createSlice({
             state.loading = true;
         },
         getWeatherStateSucess: (state, { payload }) => {
-            state.weatherState = payload;
-            state.loading = false;
+          state.weatherCurrentState = payload;
+          state.loading = false;
         },
         getWeatherStateFailure: (state) => {
             state.loading = false;
@@ -28,8 +28,10 @@ const weatherSlice = createSlice({
             state.loading = true;
         },
         getWeatherForecastSucess: (state, { payload }) => {
-            state.weatherForecast = payload;
-            state.loading = false;
+          const data = payload;
+          data.daily = data.daily.splice(-5);
+          state.weatherForecast = data;
+          state.loading = false;
         },
         getWeatherForecastFailure: (state) => {
             state.loading = false;
@@ -55,21 +57,40 @@ export default weatherSlice.reducer
 
 
 //APIs calls
-export const fetchWeatherState = () => async dispatch => {
+export const fetchWeatherForecastState = (lat, lon) => async dispatch => {
   try {
-    dispatch(getWeatherState());
+    dispatch(getWeatherForecast());
 
     console.log("Llamando a API fetchWeatherState!");
 
-    const response = await axios.get(`http://192.168.0.87:3000/v1/forecast/rosario`);
+    const response = await axios.get(`http://192.168.0.87:3000/v1/forecast/` + lat + '/' + lon);
 
     const data = response.data.DataObject;
 
     console.log("Llamando a API fetchWeatherState OK!");
 
-    // Set the data
-    const dataFiltered = filterData(data);
-    dispatch(getWeatherStateSucess(dataFiltered));
+    dispatch(getWeatherForecastSucess(data));
+
+  } 
+  catch (e) {
+    dispatch(getWeatherForecastFailure());
+    console.log("ERROR API Response -> ", e);
+  }
+}
+
+export const fetchCurrentWeatherState = () => async dispatch => {
+  try {
+    dispatch(getWeatherState());
+
+    console.log("Llamando a API fetchCurrentWeatherState!");
+
+    const response = await axios.get(`http://192.168.0.87:3000/v1/current/`);
+
+    const data = response.data.DataObject;
+
+    console.log("Llamando a API fetchCurrentWeatherState OK!");
+
+    dispatch(getWeatherStateSucess(data));
 
   } 
   catch (e) {
@@ -77,19 +98,3 @@ export const fetchWeatherState = () => async dispatch => {
     console.log("ERROR API Response -> ", e);
   }
 }
-
-const filterData = (rawData) => {
-
-    return {
-      id: rawData.city.id,
-      name: rawData.city.name,
-      country: rawData.city.country,
-      timezone: rawData.city.timezone,
-      coord: {
-        lat: rawData.city.coord.lat,
-        lon: rawData.city.coord.lon,
-      },
-      list: rawData.list,
-    };
-    
-  };
