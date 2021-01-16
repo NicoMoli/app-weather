@@ -1,5 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
+
+import { BASE_URL } from './../../config/config';
 
 export const initialState = {
     currentLocation: null,
@@ -67,7 +69,7 @@ export const fetchWeatherForecastState = (lat, lon) => async dispatch => {
   try {
     dispatch(getWeatherForecast());
 
-    const response = await axios.get(`http://192.168.0.87:3000/v1/forecast/` + lat + '/' + lon);
+    const response = await axios.get(BASE_URL + 'v1/forecast/' + lat + '/' + lon);
 
     const data = response.data.DataObject;
 
@@ -90,7 +92,7 @@ export const fetchCurrentWeatherState = (cityName) => async dispatch => {
   try {
     dispatch(getWeatherState());
 
-    const response = await axios.get(`http://192.168.0.87:3000/v1/current/` + cityName);
+    const response = await axios.get(BASE_URL + 'v1/current/` + cityName');
 
     const data = response.data.DataObject;
 
@@ -106,7 +108,7 @@ export const fetchCurrentLocationWeather = () => async dispatch => {
   try {
     dispatch(getCurrentLocation());
 
-    const response = await axios.get(`http://192.168.0.87:3000/v1/location`);
+    const response = await axios.get(BASE_URL + 'v1/location');
 
     const data = response.data.DataObject;
 
