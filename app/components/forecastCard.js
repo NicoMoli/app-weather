@@ -21,8 +21,9 @@ import {
 
 const ForecastCard = ({currentWeather, forecastWeather}) => {
 
-    const lastUpdateHour = new Date(currentWeather?.dt * 1000).getHours();
-    const lastUpdateMin = new Date(currentWeather?.dt * 1000).getMinutes();
+    const date = new Date(currentWeather?.dt * 1000);
+    const lastUpdateHour = date.getHours();
+    const lastUpdateMin = date.getMinutes() < 10 ? '0' + date.getMinutes(): date.getMinutes();
 
     const daysForecast = forecastWeather?.daily.map((day) => {
         const dt = new Date(day.dt * 1000);

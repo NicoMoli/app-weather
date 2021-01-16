@@ -9,7 +9,9 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const ContainerSearch = styled.View`
-  alignItems: flex-end;
+  flexDirection: row;
+  justifyContent: space-between;
+  margin-left: 25px;
   margin-right: 25px;
 `;
 

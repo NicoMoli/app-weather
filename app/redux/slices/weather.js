@@ -105,8 +105,6 @@ export const fetchCurrentLocationWeather = () => async dispatch => {
 
     const data = response.data.DataObject;
 
-    console.log("Location -> ", data)
-
     dispatch(fetchCurrentWeatherState(data.city));
 
     dispatch(fetchWeatherForecastState(data.lat, data.lon));

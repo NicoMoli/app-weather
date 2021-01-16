@@ -22,7 +22,7 @@ export default function useCurrentAndForecastWeather(lat = null, lon = null, cit
       dispatch(fetchWeatherForecastState(lat, lon));
     }
       
-  }, [dispatch, lat, lon]);
+  }, [dispatch, lat, lon, city]);
 
 
   return {loading, weatherForecast, weatherCurrentState};
