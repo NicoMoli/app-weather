@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import ForecastCard from './../components/forecastCard';
 import LocationSearchCity from '../components/location-search-city';
-import { Container, ContainerSearch } from './../styles/styles';
+import { Container, ContainerLoading, Loading} from './../styles/styles';
 import useCurrentAndForecastWeather from './../customsHooks/useCurrentAndForecastWeather';
 
 function WeatherScreen({route, navigation}) {
@@ -23,11 +23,12 @@ function WeatherScreen({route, navigation}) {
 		<View style={styles.container}>
 			{ 
 				data?.loading ?
-					<Text> Cargando datos del clima... </Text> 
+					<ContainerLoading>	
+						<Loading> Cargando datos del clima... </Loading> 
+					</ContainerLoading>	
 				: 
 					<Container>					
-						<LocationSearchCity navigation={navigation} />
-											
+						<LocationSearchCity navigation={navigation} />										
 						<ForecastCard currentWeather={data?.weatherCurrentState} forecastWeather={data?.weatherForecast} />
 					</Container>					
 		  	}
@@ -37,9 +38,7 @@ function WeatherScreen({route, navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-		alignItems: 'center',
     	flex: 1,
-    	justifyContent: 'center'
 	}
 });
 

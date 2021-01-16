@@ -5,7 +5,7 @@ export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: #272343;
   width: 100%;
-  padding-top: ${Platform.OS === 'android' ? StatusBar.currentHeight + "px" : 0};
+  padding-top: ${Platform.OS === 'android' ? StatusBar.currentHeight + 10 + "px" : 0};
 `;
 
 export const ContainerSearch = styled.View`
@@ -15,11 +15,23 @@ export const ContainerSearch = styled.View`
   margin-right: 25px;
 `;
 
-export const CurrentDay = styled.View`
-  position: relative;
+export const ContainerLoading = styled.View`
   flex: 1;
+  justifyContent: center;
+  alignItems: center;
+  background-color: #272343;
+`;
+
+export const Loading = styled.Text` 
+  font-size: 20px;
+  font-weight: 100;
+  color: white;
+`;
+
+export const CurrentDay = styled.View`
+  flex: 1;
+  position: relative;
   align-items: center;
-  margin-top: 20px;
 `;
 
 export const City = styled.Text`
@@ -27,12 +39,6 @@ export const City = styled.Text`
   font-weight: 200;
   color: white;
   padding-bottom: 10px;
-`;
-export const BigText = styled.Text`
-  font-size: 20px;
-  font-weight: 100;
-  color: white;
-  padding-bottom: 20px;
 `;
 
 export const BigIcon = styled.Image`
@@ -54,21 +60,19 @@ export const TempMinMax = styled.Text`
 `;
 
 export const Description = styled.Text`
-  font-size: 20px;
-  font-weight: 100;
+  font-size: 15px;
   color: #bae8e8;
   padding-top: 20px;
 `;
 
 export const Week = styled.View`
   flex: 1;
-  top: 380px;
+  top: 345px;
   left: 0;
   width: 100%;
   height: 150px;
   position: absolute;
   justify-content: center;
-
 `;
 
 export const Day = styled.View`
@@ -81,12 +85,13 @@ export const Day = styled.View`
 `;
 
 export const SmallIcon = styled.Image`
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
 `;
 
 export const SmallText = styled.Text`
-  font-size: 20px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 100;
   color: white;
 `;
+

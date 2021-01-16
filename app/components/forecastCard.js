@@ -1,6 +1,6 @@
 import React from "react";
 
-import { isSameDay, format } from "date-fns";
+import { format } from "date-fns";
 import { es } from 'date-fns/esm/locale'
 import imageDictionary from "../shared/images.js";
 
@@ -10,7 +10,6 @@ import {
     Container,
     CurrentDay,
     City,
-    BigText,
     BigIcon,
     Temp,
     Description,
@@ -50,8 +49,7 @@ const ForecastCard = ({currentWeather, forecastWeather}) => {
                     />
                     <Temp>{Math.round(currentWeather?.main.temp)}°C</Temp>
                     <TempMinMax>
-                        {Math.round(currentWeather?.main.temp_min)}°C -
-                        {Math.round(currentWeather?.main.temp_max)}°C
+                        {Math.round(currentWeather?.main.temp_min)}°C - {Math.round(currentWeather?.main.temp_max)}°C
                     </TempMinMax>
                     <Description>
                         {currentWeather?.weather[0].description}
@@ -69,7 +67,7 @@ const ForecastCard = ({currentWeather, forecastWeather}) => {
                             name={day.name.substring(0, 3)}
                             tempMax={day.temp_max}
                             tempMin={day.temp_min}
-                        />                        
+                        />                                                         
                     ))}
                 </Week>
             </Container>

@@ -1,10 +1,10 @@
 export const cities = {
     "list": [
       {
-        "name": "Córdoba",
+        "name": "Mendoza",
         "coordinates": {
-          "lat": "-31.4135",
-          "lon": "-64.18105"
+          "lat": "-32.89084",
+          "lon": "-68.82717"
         }
       },
       {

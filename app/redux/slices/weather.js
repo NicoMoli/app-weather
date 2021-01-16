@@ -28,9 +28,7 @@ const weatherSlice = createSlice({
             state.loading = true;
         },
         getWeatherForecastSucess: (state, { payload }) => {
-          const data = payload;
-          data.daily = data.daily.splice(-5);
-          state.weatherForecast = data;
+          state.weatherForecast = payload;
           state.loading = false;
         },
         getWeatherForecastFailure: (state) => {
@@ -72,6 +70,13 @@ export const fetchWeatherForecastState = (lat, lon) => async dispatch => {
     const response = await axios.get(`http://192.168.0.87:3000/v1/forecast/` + lat + '/' + lon);
 
     const data = response.data.DataObject;
+
+    if(data.daily.length > 5) {
+      data.daily.pop();
+      data.daily.pop();
+      data.daily.shift();
+    }
+
 
     dispatch(getWeatherForecastSucess(data));
 

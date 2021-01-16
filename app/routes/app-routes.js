@@ -19,8 +19,11 @@ export default function AppRoutes() {
           options={{
               title: 'Ciudades',
               headerTitleStyle: {
-                alignContent: 'center'
+                alignSelf: 'center'
               },
+              headerTitleContainerStyle: {
+                left: 0
+              }
             }}
          component={CitiesScreen} />
     </Stack.Navigator>
