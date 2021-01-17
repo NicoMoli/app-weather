@@ -92,7 +92,7 @@ export const fetchCurrentWeatherState = (cityName) => async dispatch => {
   try {
     dispatch(getWeatherState());
 
-    const response = await axios.get(BASE_URL + 'v1/current/` + cityName');
+    const response = await axios.get(BASE_URL + 'v1/current/' + cityName);
 
     const data = response.data.DataObject;
 
