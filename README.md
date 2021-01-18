@@ -16,6 +16,7 @@ Aplicación construida en React Native.
 * Redux-toolkit (versión simplificada de redux.js) https://redux-toolkit.js.org/
 * Expo https://expo.io/ . Es una plataforma que sirve de gran ayuda al momento de crear el proyecto, debuggear, testear y deployar en plataformas nativas.
 * React navigation https://reactnavigation.org/ . Para realizar la navegación entre pantallas.
+* Axios, utilizada para realizar las peticiones http a servicios externos. https://www.npmjs.com/package/axios
 
 ## Funcionamiento de la aplicación:
 
