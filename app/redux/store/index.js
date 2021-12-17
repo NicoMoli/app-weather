@@ -1,14 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { combineReducers, createStore } from 'redux'
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, createStore } from "redux";
 
-import weatherSlice from './../slices/weather';
+import weatherSlice from "./../slices/weather";
 
 const reducer = combineReducers({
-    weatherSlice,
-})
-   
+  weatherSlice,
+});
+
 const store = configureStore({
-    reducer,
-})
-   
+  reducer,
+});
+
 export default store;

@@ -1,9 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentLocationWeather, fetchCurrentWeatherState, fetchWeatherForecastState } from '../redux/slices/weather';
+import {
+  fetchCurrentLocationWeather,
+  fetchCurrentWeatherState,
+  fetchWeatherForecastState,
+} from "../redux/slices/weather";
 
-export default function useCurrentAndForecastWeather(lat = null, lon = null, city = null) {
-
+export default function useCurrentAndForecastWeather(
+  lat = null,
+  lon = null,
+  city = null
+) {
   const dispatch = useDispatch();
 
   //Obtenemos la ubicacion actual a través del server
@@ -13,17 +20,13 @@ export default function useCurrentAndForecastWeather(lat = null, lon = null, cit
   ).weatherSlice;
 
   useEffect(() => {
-    
-    if(!lat && !lon && !city) {
+    if (!lat && !lon && !city) {
       dispatch(fetchCurrentLocationWeather());
-    }  
-    else {
+    } else {
       dispatch(fetchCurrentWeatherState(city));
       dispatch(fetchWeatherForecastState(lat, lon));
     }
-      
   }, [dispatch, lat, lon, city]);
 
-
-  return {loading, weatherForecast, weatherCurrentState};
+  return { loading, weatherForecast, weatherCurrentState };
 }
